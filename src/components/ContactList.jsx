@@ -6,11 +6,10 @@ function ContactList({ contacts }) {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <ContactSearch />
-            <ContactItem />
-            <ContactItem />
-            <ContactItem />
+            {contacts.map((contact) => <ContactItem key={contact.id} contact={contact} />)}
         </Box>
     )
 }
 
+// если список пустой, то вывести надпись
 export default ContactList

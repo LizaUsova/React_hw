@@ -2,9 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {TextField, Box, Button} from "@mui/material";
 import {useState} from "react";
 
-function AddContactForm() {
-
-    const [allContacts, setContactsNumbers] = useState([]);
+function AddContactForm( {setContacts}) {
 
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
@@ -21,14 +19,15 @@ function AddContactForm() {
             id: uuidv4()
         }
 
-        setContactsNumbers([...allContacts, newContact])
+        setContacts((contacts) => {
+            return [...contacts, newContact]
+        })
 
         setName('');
         setSurname('');
         setNumber('');
     }
 
-    console.log(allContacts);
 
     return (
         <Box component="form"
@@ -70,7 +69,7 @@ function AddContactForm() {
                     },
                 }}
             />
-            <Button variant="contained" type="submit" textButton="Add" onSubmit={handleSubmit}>Add</Button>
+            <Button variant="contained" onClick={handleSubmit}>Add</Button>
         </Box>
     )
 }
