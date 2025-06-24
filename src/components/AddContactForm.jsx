@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {TextField, Box, Button} from "@mui/material";
 import {useState} from "react";
 
-function AddContactForm( {setContacts}) {
+function AddContactForm({ setContacts }) {
 
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
@@ -10,6 +10,8 @@ function AddContactForm( {setContacts}) {
 
     const handleSubmit  = (e) => {
         e.preventDefault()
+
+        if (!name.trim() || !number.trim() || !surname.trim()) throw new Error('Value is empty') // Simple Validation
 
         const newContact = {
             name: name,

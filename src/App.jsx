@@ -7,18 +7,23 @@ import {Grid} from "@mui/material";
 function App() {
     const [contacts, setContacts] = useState([]);
 
+    const handleDelete = (id) => {
+        setContacts((contacts) => contacts.filter((contact) => contact.id !== id));
+    };
+
   return (
-      <Grid container spacing={2} columns={12} sx={{ display: 'flex', justifyContent: 'space-between',gap: 5 }}>
-          <Grid span={4}>
-              <AddContactForm setContacts={setContacts}/>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 12 }} >
+              <Grid size={{ xs: 12, sm: 6 }}>
+                  <AddContactForm setContacts={setContacts}/>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                    <ContactList contacts={contacts} onDelete={handleDelete}/>
+              </Grid >
           </Grid>
-          <Grid span={6}>
-              <ContactList contacts={contacts} />
-          </Grid>
-      </Grid>
   )
 }
 
-/*Если контакст пустой, то форма должна отобразиться слева всегда*/
+/*Если contacts пустой, то форма должна отобразиться слева всегда*/
 
 export default App
