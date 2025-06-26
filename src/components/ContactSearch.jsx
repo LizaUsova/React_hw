@@ -7,18 +7,19 @@ function ContactSearch( {contacts} ) {
         //     freeSolo
         //     id="free-solo-2-demo"
         //     disableClearable
-        //     // options={contacts.map((option) => option.title)}
+        //     options={contacts.map((option) => option.name)}
         //     renderInput={(params) => (
         //         <TextField
         //             {...contacts}
         //             label="Search input"
-        //             // InputProps={{
-        //             //     ...params.InputProps,
-        //             //     type: 'search',
-        //             // }}
+        //             InputProps={{
+        //                 ...contacts.name,
+        //                 type: 'search',
+        //             }}
         //         />
         //     )}
         // />
+
 }
 
 export default ContactSearch

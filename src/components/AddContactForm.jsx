@@ -1,35 +1,47 @@
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import {TextField, Box, Button} from "@mui/material";
-import {useState} from "react";
 
-function AddContactForm({ setContacts }) {
-
-    const [name, setName] = useState('')
-    const [surname, setSurname] = useState('')
-    const [number, setNumber] = useState('')
+function AddContactForm({ setContacts, editContact, setEditContact, name, lastName, number, setLastName, setNumber, setName }) {
 
     const handleSubmit  = (e) => {
         e.preventDefault()
 
-        if (!name.trim() || !number.trim() || !surname.trim()) throw new Error('Value is empty') // Simple Validation
+        if (editContact !== null) {
+            setContacts(prev => prev.map(contact => contact.id === editContact.id ? {
+                ...contact,
+                name,
+                lastName,
+                number
+            } : contact))
 
-        const newContact = {
-            name: name,
-            surname: surname,
-            number: number,
-            isDeleted: false,
-            id: uuidv4()
+            setEditContact(null)
+
+            setName('');
+            setLastName('');
+            setNumber('');
+        } else {
+            if (!name.trim() || !number.trim() || !lastName.trim()) throw new Error('Value is empty')
+
+            const newContact = {
+                name: name,
+                lastName: lastName,
+                number: number,
+                isDeleted: false,
+                id: uuidv4()
+            }
+
+            setContacts((contacts) => {
+                return [...contacts, newContact]
+            })
+
+            setName('');
+            setLastName('');
+            setNumber('');
         }
-
-        setContacts((contacts) => {
-            return [...contacts, newContact]
-        })
-
-        setName('');
-        setSurname('');
-        setNumber('');
     }
 
+    const actionBtnName = editContact === null ? 'ADD': 'SAVE';
 
     return (
         <Box component="form"
@@ -50,10 +62,10 @@ function AddContactForm({ setContacts }) {
                        }}/>
             <TextField
                 id="outlined-basic"
-                label="Surname"
+                label="LastName"
                 variant="outlined"
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 slotProps={{
                     inputLabel: {
                         shrink: true,
@@ -71,9 +83,31 @@ function AddContactForm({ setContacts }) {
                     },
                 }}
             />
-            <Button variant="contained" onClick={handleSubmit}>Add</Button>
+
+            <Button variant="contained" onClick={handleSubmit}>{actionBtnName}</Button>
         </Box>
     )
 }
+
+AddContactForm.propTypes = {
+    setContacts: PropTypes.func.isRequired,
+    editContact: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        lastName: PropTypes.string,
+        number: PropTypes.string,
+    }),
+    setEditContact: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+    setName: PropTypes.func.isRequired,
+    setLastName: PropTypes.func.isRequired,
+    setNumber: PropTypes.func.isRequired,
+};
+
+AddContactForm.defaultProps = {
+    editContact: null,
+};
 
 export default AddContactForm

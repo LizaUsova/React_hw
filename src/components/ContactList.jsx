@@ -1,8 +1,9 @@
 import ContactItem from "./ContactItem.jsx";
 import ContactSearch from "./ContactSearch.jsx"
 import {Box, Typography} from "@mui/material";
+import PropTypes from "prop-types";
 
-function ContactList({ contacts, onDelete }) {
+function ContactList({ contacts, onDelete, onEdit, setLastName, setNumber, setName }) {
 
     return (
         contacts.length === 0
@@ -10,12 +11,32 @@ function ContactList({ contacts, onDelete }) {
             :<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <ContactSearch />
                 {contacts.map((contact) => (
-                    <ContactItem key={contact.id} contact={contact} onDelete={onDelete}/>
+                    <ContactItem key={contact.id}
+                                 contact={contact}
+                                 onDelete={onDelete}
+                                 onEdit={onEdit}
+                                 setName={setName}
+                                 setLastName={setLastName}
+                                 setNumber={setNumber} />
                 ))}
             </Box>
     )
 }
 
-// если список пустой, то вывести надпись
-// Вопрос: где лучше делать проверку на пустой список - в начале тела фугкции или в return?
+ContactList.propTypes = {
+    contacts: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            name: PropTypes.string,
+            lastName: PropTypes.string,
+            number: PropTypes.string,
+        })
+    ).isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    setName: PropTypes.func.isRequired,
+    setLastName: PropTypes.func.isRequired,
+    setNumber: PropTypes.func.isRequired,
+};
+
 export default ContactList
