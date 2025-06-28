@@ -1,7 +1,6 @@
-import ContactItem from "./ContactItem.jsx";
-import ContactSearch from "./ContactSearch.jsx"
-import {Box, Typography} from "@mui/material";
 import PropTypes from "prop-types";
+import ContactItem from "./ContactItem.jsx";
+import {Box, Typography} from "@mui/material";
 
 function ContactList({ contacts, onDelete, onEdit, setLastName, setNumber, setName }) {
 
@@ -9,7 +8,6 @@ function ContactList({ contacts, onDelete, onEdit, setLastName, setNumber, setNa
         contacts.length === 0
          ? <Typography>List is empty</Typography>
             :<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <ContactSearch />
                 {contacts.map((contact) => (
                     <ContactItem key={contact.id}
                                  contact={contact}

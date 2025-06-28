@@ -1,7 +1,7 @@
+import PropTypes from "prop-types";
 import { ListItemText, Typography, ListItem, Button, ButtonGroup, Grid, Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import PropTypes from "prop-types";
 
 function ContactItem({ contact, onDelete, onEdit, setLastName, setNumber, setName }) {
 
